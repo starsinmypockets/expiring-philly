@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import "leaflet/dist/leaflet.css";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('expiring-subsidies'));
 root.render(
   <React.StrictMode>
     <App />
