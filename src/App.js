@@ -2,9 +2,10 @@ import "./App.css"
 import { useState } from "react"
 import { MapContainer, TileLayer, Marker, Popup, GeoJSON } from "react-leaflet"
 import { Icon } from "leaflet"
-import markerIconPng from "leaflet/dist/images/marker-icon.png"
+import markerIconPng from "./red-x.png"
 import CouncilDistricts from "./overlays/Council_Districts_2016.json"
 import expiring from "./expiring_properties.json"
+import "bootstrap/dist/css/bootstrap.min.css"
 
 const ActiveDistrict = ({ district, person, properties, units }) => {
   return (
@@ -17,10 +18,7 @@ const ActiveDistrict = ({ district, person, properties, units }) => {
         <strong>Expiring units: </strong>
         {units}
       </p>
-      <p>
-        <strong>Council Person: </strong>
-        {person.name}
-      </p>
+      <p>{person.name}</p>
       <p>
         <strong>email: </strong>
         {person.email}
@@ -194,14 +192,20 @@ const App = () => {
   const [showAtLarge, setShowAtLarge] = useState(false)
   const [activeDistrict, setActiveDistrict] = useState()
 
+  console.log(window.innerWidth)
+  const isMobile = window.innerWidth <= 756
+
   return (
-    <>
-      <div style={{ width: "80%", float: "left", overflow: "hidden" }}>
+    <div className="row">
+      <div
+        className="col-md-9"
+        style={{ overflowX: "hidden", overflowY: "scroll" }}
+      >
         <MapContainer
           center={position}
           zoom={13}
           scrollWheelZoom={true}
-          style={{ minHeight: "100vh", minWidth: "100vw" }}
+          style={{ minHeight: isMobile ? "90vh" : "100vh", minWidth: "100vw" }}
         >
           <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -233,8 +237,8 @@ const App = () => {
                 icon={
                   new Icon({
                     iconUrl: markerIconPng,
-                    iconSize: [24, 32],
-                    iconAnchor: [12, 32],
+                    iconSize: [28, 34],
+                    iconAnchor: [14, 17],
                   })
                 }
               >
@@ -250,13 +254,7 @@ const App = () => {
             ))}
         </MapContainer>
       </div>
-      <div
-        className="map-legend"
-        style={{
-          float: "right",
-          width: "20%",
-        }}
-      >
+      <div className="map-legend col-md-3">
         <div style={{ padding: "20px" }}>
           <h1>Expiring subsidized housing contracts</h1>
           {activeDistrict && (
@@ -284,7 +282,7 @@ const App = () => {
                   setShowDistricts(!showDistricts)
                 }}
               />
-              <label for="districts">Council Districts</label>
+              <label htmlFor="districts" style={{marginLeft: "4px"}}>Council Districts</label>
             </li>
             <li>
               <input
@@ -295,7 +293,7 @@ const App = () => {
                   setShowProperties(!showProperties)
                 }}
               />
-              <label for="properties">Expiring Properties</label>
+              <label htmlFor="properties" style={{marginLeft: "4px"}}>Expiring Properties</label>
             </li>
           </ul>
           <h3>About</h3>
@@ -306,13 +304,32 @@ const App = () => {
             There is a already a long waiting list and no relief in site.
           </p>
           <h3>What you can do</h3>
-          <ul>
-            <li>
-              Contact district council people and let them know that strong and
-              immediate action must be taken to preserve affordable and
-              subsidized housing in your district.
-            </li>
-          </ul>
+          <p>
+            Contact district council people and let them know that strong and
+            immediate action must be taken to preserve affordable and subsidized
+            housing in your district.
+          </p>
+          <p>
+            Contact Mayor Kenney and tell him to take immediate action to save
+            the UC Townhomes and all expiring subsidized housing.
+          </p>
+          <p>Organize! Get involved! Meet your neighbors!</p>
+          <div className="panel panel-default">
+            <div className="panel-body">
+              <h3>Mayor Jim Kenney</h3>
+              <p>
+                City Hall, Office 215
+                <br />
+                Philadelphia, PA 19107
+                <br />
+                <strong>(215) 686-2181</strong>
+                <br />
+                <a href="https://www.phila.gov/departments/mayor/mayors-correspondence-form/">
+                  Correspondence form
+                </a>
+              </p>
+            </div>
+          </div>
           <h3>
             District Councilpeople{"  "}
             <span
@@ -362,7 +379,7 @@ const App = () => {
             ))}
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
