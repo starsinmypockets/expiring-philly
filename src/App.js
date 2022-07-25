@@ -192,7 +192,7 @@ const App = () => {
   const [showAtLarge, setShowAtLarge] = useState(false)
   const [activeDistrict, setActiveDistrict] = useState()
 
-  console.log(window.innerWidth)
+  console.log({ expiring })
   const isMobile = window.innerWidth <= 756
 
   return (
@@ -244,10 +244,15 @@ const App = () => {
               >
                 <Popup>
                   <>
-                    <p>{property["Property Name"]}</p>
-                    <p>{property["Property Address"]}</p>
-                    <p>OWNER: {property["Owner Name"]}</p>
-                    <p>UNITS: {property["Total Units"]}</p>
+                    {property["Property Name"]}
+                    <br />
+                    {property["Property Address"]}
+                    <br />
+                    OWNER: {property["Owner Name"]}
+                    <br />
+                    UNITS: {property["Total Units"]}
+                    <br />
+                    Contract Expires*: {property["Earliest End Date"]}
                   </>
                 </Popup>
               </Marker>
@@ -282,7 +287,9 @@ const App = () => {
                   setShowDistricts(!showDistricts)
                 }}
               />
-              <label htmlFor="districts" style={{marginLeft: "4px"}}>Council Districts</label>
+              <label htmlFor="districts" style={{ marginLeft: "4px" }}>
+                Council Districts
+              </label>
             </li>
             <li>
               <input
@@ -293,7 +300,9 @@ const App = () => {
                   setShowProperties(!showProperties)
                 }}
               />
-              <label htmlFor="properties" style={{marginLeft: "4px"}}>Expiring Properties</label>
+              <label htmlFor="properties" style={{ marginLeft: "4px" }}>
+                Expiring Properties
+              </label>
             </li>
           </ul>
           <h3>About</h3>
@@ -377,6 +386,11 @@ const App = () => {
                 <hr />
               </>
             ))}
+          <i>* "Expires" refers to earliest end date for contract</i>
+          <hr/>
+          <p>
+            <i>Source: National Housing Preservation Database</i>
+          </p>
         </div>
       </div>
     </div>
